@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# --- API: never rewrite /api/* to SPA ---
+RewriteRule ^api/ - [L]
+
+# --- SPA fallback for React routes ---
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# If you upload React dist to public_html root, this will serve /index.html for client routes.
+RewriteRule ^ index.html [L]
+
