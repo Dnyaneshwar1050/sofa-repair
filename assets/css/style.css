@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kalam:wght@300;400;700&family=Mukta:wght@200;300;400;500;600;700;800&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sura:wght@400;700&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap');
+
+* {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Mobile menu animation */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slideDown {
+    animation: slideDown 0.3s ease-out;
+}
+
+/* Scrollbar styling for filter tabs */
+.scrollbar-thin::-webkit-scrollbar {
+    height: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Dynamic Classes */
+:root {
+    --primary-color: #8B4513; /* example, need to update based on settings */
+    --secondary-color: #D2B48C;
+}
+
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.bg-secondary {
+    background-color: var(--secondary-color) !important;
+}
+
+button.btn-main {
+    background-color: var(--primary-color);
+    color: white;
+}
