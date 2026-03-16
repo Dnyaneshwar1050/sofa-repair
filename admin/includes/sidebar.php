@@ -92,7 +92,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </li>
 
             <li class="px-2">
-                <a href="#" class="text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200">
+                <a href="/admin/blogs.php" class="<?= ($current_page == 'blogs.php') ? 'bg-white/10 text-white border-l-4 border-[#fbbd06]' : 'text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent' ?> group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200">
                     <i class="fa-brands fa-blogger-b w-8 text-center text-lg"></i>
                     Blog Management
                 </a>

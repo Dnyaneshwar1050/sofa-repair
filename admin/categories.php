@@ -14,11 +14,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $_POST['id'] ?? null;
         $name = trim($_POST['name'] ?? '');
         $description = trim($_POST['description'] ?? '');
-        $image = trim($_POST['image'] ?? 'default-category.png');
+        $image = trim($_POST['existing_image'] ?? 'default-category.png');
+
+        // Handle File Upload
+        if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
+            $upload_dir = __DIR__ . '/../frontend/public/';
+            $file_extension = pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION);
+            $new_filename = 'category_' . uniqid() . '.' . $file_extension;
+            
+            if (move_uploaded_file($_FILES['image_file']['tmp_name'], $upload_dir . $new_filename)) {
+                $image = $new_filename;
+            } else {
+                $error = 'Failed to upload image.';
+            }
+        }
 
         if (empty($name)) {
             $error = 'Category name is required.';
-        } else {
+        } else if (empty($error)) {
             if ($action === 'update' && $id) {
                 $stmt = $pdo->prepare("UPDATE categories SET name = ?, description = ?, image = ? WHERE id = ?");
                 if ($stmt->execute([$name, $description, $image, $id])) {
@@ -62,7 +75,7 @@ require_once __DIR__ . '/includes/header.php';
         <p class="text-gray-500 text-sm">Create and manage service categories.</p>
     </div>
     <button onclick="document.getElementById('category-form-modal').classList.remove('hidden')"
-        class="bg-orange-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-orange-700 transition flex items-center gap-2 text-sm">
+        class="bg-green-600 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-green-700 transition shadow-sm flex items-center gap-2 text-sm tracking-wide">
         <i class="fa-solid fa-plus"></i> Add Category
     </button>
 </div>
@@ -113,16 +126,16 @@ require_once __DIR__ . '/includes/header.php';
                         </td>
                         <td class="p-4 text-right space-x-2">
                             <button onclick="editCategory(<?= htmlspecialchars(json_encode($category)) ?>)"
-                                class="text-blue-600 hover:text-blue-800 w-8 h-8 rounded-full bg-blue-50 hover:bg-blue-100 transition inline-flex items-center justify-center">
-                                <i class="fa-solid fa-pen"></i>
+                                class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1.5 rounded-md text-xs font-bold transition shadow-sm inline-flex items-center gap-1">
+                                Edit
                             </button>
                             <form method="POST" class="inline-block"
                                 onsubmit="return confirm('Are you sure you want to delete this category?');">
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="id" value="<?= $category->id ?>">
                                 <button type="submit"
-                                    class="text-red-600 hover:text-red-800 w-8 h-8 rounded-full bg-red-50 hover:bg-red-100 transition inline-flex items-center justify-center">
-                                    <i class="fa-solid fa-trash"></i>
+                                    class="bg-red-600 hover:bg-red-700 text-white px-4 py-1.5 rounded-md text-xs font-bold transition shadow-sm inline-flex items-center gap-1">
+                                    Delete
                                 </button>
                             </form>
                         </td>
@@ -148,7 +161,7 @@ require_once __DIR__ . '/includes/header.php';
                 <i class="fa-solid fa-times text-xl"></i>
             </button>
         </div>
-        <form method="POST" action="categories.php" class="p-6">
+        <form method="POST" action="categories.php" enctype="multipart/form-data" class="p-6">
             <input type="hidden" name="action" id="form-action" value="create">
             <input type="hidden" name="id" id="form-id" value="">
 
@@ -165,11 +178,11 @@ require_once __DIR__ . '/includes/header.php';
                         class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition"></textarea>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Image Filename</label>
-                    <input type="text" name="image" id="form-image" value="default-category.png"
-                        class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition"
-                        placeholder="e.g., sofa-repair.jpg">
-                    <p class="text-xs text-gray-500 mt-1">Image must exist in /frontend/public/ folder</p>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Category Image</label>
+                    <input type="file" name="image_file" id="form-image-file" accept="image/*"
+                        class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100 transition">
+                    <p class="text-xs text-gray-500 mt-1">Leave empty to keep existing image</p>
+                    <input type="hidden" name="existing_image" id="form-existing-image" value="default-category.png">
                 </div>
             </div>
 
@@ -191,7 +204,8 @@ require_once __DIR__ . '/includes/header.php';
         document.getElementById('form-id').value = category.id;
         document.getElementById('form-name').value = category.name;
         document.getElementById('form-description').value = category.description;
-        document.getElementById('form-image').value = category.image;
+        document.getElementById('form-existing-image').value = category.image;
+        document.getElementById('form-image-file').value = '';
         document.getElementById('category-form-modal').classList.remove('hidden');
     }
 
@@ -201,7 +215,8 @@ require_once __DIR__ . '/includes/header.php';
         document.getElementById('form-id').value = '';
         document.getElementById('form-name').value = '';
         document.getElementById('form-description').value = '';
-        document.getElementById('form-image').value = 'default-category.png';
+        document.getElementById('form-existing-image').value = 'default-category.png';
+        document.getElementById('form-image-file').value = '';
         document.getElementById('modal-title').innerText = 'Add Category';
     }
 </script>

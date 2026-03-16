@@ -46,31 +46,45 @@ require_once __DIR__ . '/includes/header.php';
         <?php if (count($services) > 0): ?>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 <?php foreach ($services as $service): ?>
-                    <div
-                        class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all group flex flex-col">
-                        <div class="relative h-48 overflow-hidden">
+                    <div class="bg-white rounded-[20px] shadow-sm border border-gray-100 overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-md">
+                        <!-- Top Image -->
+                        <div class="relative h-56 overflow-hidden">
                             <img src="/frontend/public/<?= htmlspecialchars($service->image) ?>"
                                 alt="<?= htmlspecialchars($service->name) ?>"
-                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                 onerror="this.src='/frontend/public/default-service.png'">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                            <div class="absolute bottom-4 left-4 text-white">
-                                <h4 class="font-bold text-lg mb-1">
-                                    <?= htmlspecialchars($service->name) ?>
-                                </h4>
-                                <p class="text-sm text-gray-200">Starting at ₹
-                                    <?= number_format($service->base_price, 2) ?>
-                                </p>
-                            </div>
                         </div>
-                        <div class="p-4 flex-grow flex flex-col justify-between">
-                            <p class="text-gray-600 text-sm line-clamp-2 mb-4">
+                        
+                        <!-- Card Content -->
+                        <div class="p-6 flex-grow flex flex-col">
+                            <!-- Title -->
+                            <h3 class="font-bold text-lg text-gray-900 mb-1 leading-tight">
+                                <?= htmlspecialchars($service->name) ?>
+                            </h3>
+                            
+                            <!-- Static Rating (Placeholder since no rating column exists per service) -->
+                            <div class="flex items-center gap-1 mb-3">
+                                <i class="fa-solid fa-star text-orange-500 text-sm"></i>
+                                <span class="text-sm font-medium text-gray-700">4.0 (50 reviews)</span>
+                            </div>
+                            
+                            <!-- Contact for Pricing -->
+                            <a href="/service-details.php?id=<?= $service->id ?>" class="text-blue-600 font-semibold mb-3 hover:text-blue-700 transition">
+                                Contact for Pricing
+                            </a>
+                            
+                            <!-- Short Description -->
+                            <p class="text-gray-600 text-sm line-clamp-2 leading-relaxed mb-6">
                                 <?= htmlspecialchars($service->description) ?>
                             </p>
-                            <a href="/service-details.php?id=<?= $service->id ?>"
-                                class="w-full block text-center bg-orange-50 text-orange-600 font-semibold py-2 rounded-xl group-hover:bg-orange-600 group-hover:text-white transition-colors">
-                                View Details & Book
-                            </a>
+                            
+                            <!-- Full Width Button -->
+                            <div class="mt-auto">
+                                <a href="/service-details.php?id=<?= $service->id ?>"
+                                    class="w-full block text-center bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                                    Get Quote
+                                </a>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
