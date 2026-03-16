@@ -2,79 +2,124 @@
 // admin/includes/sidebar.php
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
-<aside class="w-64 bg-gray-900 h-screen flex flex-col shadow-2xl shrink-0 transition-all duration-300 relative z-20">
-    <!-- Header -->
-    <div class="h-16 flex items-center justify-center border-b border-gray-800 px-4 bg-gray-950">
-        <a href="/admin/index.php" class="flex items-center gap-2">
-            <span class="text-orange-500 text-xl font-black tracking-wider uppercase">Khushi</span>
-            <span class="text-white text-sm tracking-widest font-light opacity-80">ADMIN</span>
-        </a>
+<aside class="w-[280px] bg-[#253b70] h-full flex flex-col shrink-0 relative z-20 text-white shadow-xl">
+    <!-- Header Logo -->
+    <div class="pt-8 pb-6 px-6 flex flex-col items-center justify-center border-b border-light-blue-900/30">
+        <h1 class="text-[#fbbd06] text-2xl font-serif-custom font-bold text-center leading-tight tracking-wide">
+            Khushi Home<br>Sofa Repairing
+        </h1>
     </div>
 
     <!-- Navigation -->
-    <nav class="flex-1 overflow-y-auto py-6 px-3 custom-scrollbar">
+    <nav class="flex-1 overflow-y-auto py-6 custom-scrollbar">
         <ul class="space-y-1">
-            <li>
+            <li class="px-6 py-2">
+                <span class="text-sm font-bold text-white mb-2 block tracking-wide">Management</span>
+            </li>
+
+            <!-- We don't have a specific dashboard link in the screenshot sidebar, but we need one -->
+            <li class="px-2">
                 <a href="/admin/index.php"
-                    class="<?= ($current_page == 'index.php') ? 'bg-orange-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?> group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200">
-                    <i
-                        class="fa-solid fa-chart-pie w-6 opacity-70 group-hover:opacity-100 flex-shrink-0 text-center"></i>
-                    Dashboard
+                    class="<?= ($current_page == 'index.php') ? 'bg-white/10 text-white border-l-4 border-[#fbbd06]' : 'text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent' ?> group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200">
+                    <i class="fa-solid fa-chart-line w-8 text-center text-lg"></i>
+                    Admin Dashboard
                 </a>
             </li>
 
-            <li class="pt-4 pb-2">
-                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider px-4">Management</span>
-            </li>
-
-            <li>
-                <a href="/admin/bookings.php"
-                    class="<?= ($current_page == 'bookings.php') ? 'bg-orange-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?> group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200">
-                    <i
-                        class="fa-solid fa-calendar-check w-6 opacity-70 group-hover:opacity-100 flex-shrink-0 text-center"></i>
-                    Bookings
+            <li class="px-2">
+                <a href="/admin/users.php"
+                    class="<?= ($current_page == 'users.php') ? 'bg-white/10 text-white border-l-4 border-[#fbbd06]' : 'text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent' ?> group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200">
+                    <i class="fa-solid fa-user w-8 text-center text-lg"></i>
+                    User Accounts
                 </a>
             </li>
 
-            <li>
-                <a href="/admin/services.php"
-                    class="<?= ($current_page == 'services.php') ? 'bg-orange-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?> group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200">
-                    <i class="fa-solid fa-couch w-6 opacity-70 group-hover:opacity-100 flex-shrink-0 text-center"></i>
-                    Services
-                </a>
-            </li>
-
-            <li>
+            <li class="px-2">
                 <a href="/admin/categories.php"
-                    class="<?= ($current_page == 'categories.php') ? 'bg-orange-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?> group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200">
-                    <i class="fa-solid fa-tags w-6 opacity-70 group-hover:opacity-100 flex-shrink-0 text-center"></i>
+                    class="<?= ($current_page == 'categories.php') ? 'bg-white/10 text-white border-l-4 border-[#fbbd06]' : 'text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent' ?> group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200">
+                    <i class="fa-solid fa-tags w-8 text-center text-lg"></i>
                     Categories
                 </a>
             </li>
 
-            <?php if ($_SESSION['user_role'] === 'superadmin'): ?>
-                <li class="pt-4 pb-2">
-                    <span class="text-xs font-bold text-gray-500 uppercase tracking-wider px-4">Administration</span>
-                </li>
+            <li class="px-2">
+                <a href="/admin/services.php"
+                    class="<?= ($current_page == 'services.php') ? 'bg-white/10 text-white border-l-4 border-[#fbbd06]' : 'text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent' ?> group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200">
+                    <i class="fa-solid fa-couch w-8 text-center text-lg"></i>
+                    Service Catalog
+                </a>
+            </li>
 
-                <li>
-                    <a href="/admin/users.php"
-                        class="<?= ($current_page == 'users.php') ? 'bg-orange-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' ?> group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200">
-                        <i class="fa-solid fa-users w-6 opacity-70 group-hover:opacity-100 flex-shrink-0 text-center"></i>
-                        Users
-                    </a>
-                </li>
-            <?php endif; ?>
+            <li class="px-2">
+                <a href="/admin/bookings.php"
+                    class="<?= ($current_page == 'bookings.php') ? 'bg-white/10 text-white border-l-4 border-[#fbbd06]' : 'text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent' ?> group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200">
+                    <i class="fa-solid fa-clipboard-list w-8 text-center text-lg"></i>
+                    Bookings/Requests
+                </a>
+            </li>
+
+            <!-- Separator -->
+            <li class="my-4 border-t border-white/10 mx-6"></li>
+
+            <li class="px-2">
+                <a href="#"
+                    class="text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent group flex items-center justify-between px-4 py-3 text-sm font-semibold transition-all duration-200">
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-bell w-8 text-center text-lg"></i>
+                        Notifications
+                    </div>
+                    <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">20</span>
+                </a>
+            </li>
+
+            <li class="px-2">
+                <a href="#"
+                    class="text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200">
+                    <i class="fa-regular fa-clock w-8 text-center text-lg"></i>
+                    <div class="leading-tight">
+                        Recent Requests<br>
+                        <span class="text-[10px] text-gray-400 font-normal">(24h)</span>
+                    </div>
+                </a>
+            </li>
+
+            <li class="px-2">
+                <a href="#"
+                    class="text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200">
+                    <i class="fa-solid fa-envelope w-8 text-center text-lg"></i>
+                    Contact Messages
+                </a>
+            </li>
+
+            <li class="px-2">
+                <a href="#" class="text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200">
+                    <i class="fa-brands fa-blogger-b w-8 text-center text-lg"></i>
+                    Blog Management
+                </a>
+            </li>
+
+            <li class="px-2 pt-6">
+                <a href="#" class="bg-[#fbbd06] text-black border-l-4 border-transparent rounded group flex items-center mx-4 px-4 py-3 text-sm font-bold shadow-md transition-all duration-200">
+                    <i class="fa-solid fa-gear w-8 text-center text-lg"></i>
+                    System Settings
+                </a>
+            </li>
+            
+            <li class="px-2 pt-4">
+                <a href="/" class="text-gray-300 hover:text-white group flex items-center px-4 py-2 text-sm font-semibold transition-all duration-200">
+                    <i class="fa-solid fa-desktop w-8 text-center text-lg"></i>
+                    Back to Client Site
+                </a>
+            </li>
         </ul>
     </nav>
-
-    <!-- Footer info -->
-    <div class="p-4 border-t border-gray-800 flex flex-col space-y-2 text-xs text-gray-500 text-center">
-        <a href="/" target="_blank"
-            class="flex justify-center items-center text-gray-400 hover:text-white transition duration-200 py-1 bg-gray-800 rounded-lg group">
-            <i class="fa-solid fa-up-right-from-square mr-2 text-[10px] opacity-70 group-hover:text-orange-400"></i>
-            View Website
+    
+    <!-- Footer Logout Button -->
+    <div class="p-6">
+        <a href="/logout.php"
+            class="flex justify-center items-center text-white bg-red-600 hover:bg-red-700 font-bold rounded shadow-lg transition duration-200 py-3 w-full">
+            <i class="fa-solid fa-right-from-bracket mr-2"></i>
+            Logout
         </a>
-        <p class="mt-2">Khushi Admin v1.0</p>
     </div>
 </aside>
