@@ -152,9 +152,122 @@ require_once __DIR__ . '/includes/header.php';
                         </button>
                     </div>
                 </form>
+
+                <!-- Email Verification Section -->
+                <?php if (!$user->email_verified): ?>
+                <div class="mt-8 p-6 bg-red-50 border border-red-200 rounded-xl">
+                    <h4 class="text-xl font-bold text-red-700 mb-2"><i class="fa-solid fa-triangle-exclamation mr-2"></i> Unverified Email</h4>
+                    <p class="text-gray-700 mb-4">Please verify your email address to access all features like submitting reviews.</p>
+                    
+                    <div id="otp-request-section">
+                        <button id="send-otp-btn" class="bg-red-600 text-white px-4 py-2 rounded font-semibold hover:bg-red-700 transition">
+                            Send Verification Code
+                        </button>
+                    </div>
+
+                    <div id="otp-verify-section" class="hidden mt-4 space-y-3">
+                        <p class="text-sm text-green-700 font-semibold" id="otp-success-msg"></p>
+                        <div class="flex gap-2">
+                            <input type="text" id="otp-input" placeholder="Enter 6-digit OTP" class="p-2 border border-gray-300 rounded outline-none focus:border-red-500 w-40" maxlength="6">
+                            <button id="verify-otp-btn" class="bg-green-600 text-white px-4 py-2 rounded font-semibold hover:bg-green-700 transition">
+                                Verify
+                            </button>
+                        </div>
+                        <p class="text-sm text-red-600 hidden" id="otp-error-msg"></p>
+                    </div>
+                </div>
+                <?php else: ?>
+                <div class="mt-8 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-3">
+                    <i class="fa-solid fa-circle-check text-green-600 text-2xl"></i>
+                    <div>
+                        <h4 class="font-bold text-green-800">Email Verified</h4>
+                        <p class="text-sm text-green-700">Your account is fully verified.</p>
+                    </div>
+                </div>
+                <?php endif; ?>
+
             </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const sendBtn = document.getElementById('send-otp-btn');
+    const verifyBtn = document.getElementById('verify-otp-btn');
+    
+    if (sendBtn) {
+        sendBtn.addEventListener('click', async () => {
+            sendBtn.disabled = true;
+            sendBtn.innerText = 'Sending...';
+            
+            try {
+                const res = await fetch('/api/EmailVerificationController.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ action: 'send' })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    document.getElementById('otp-request-section').classList.add('hidden');
+                    document.getElementById('otp-verify-section').classList.remove('hidden');
+                    document.getElementById('otp-success-msg').innerText = data.message;
+                } else {
+                    alert(data.error || 'Failed to send OTP');
+                    sendBtn.disabled = false;
+                    sendBtn.innerText = 'Send Verification Code';
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Network error');
+                sendBtn.disabled = false;
+                sendBtn.innerText = 'Send Verification Code';
+            }
+        });
+    }
+
+    if (verifyBtn) {
+        verifyBtn.addEventListener('click', async () => {
+            const otpCode = document.getElementById('otp-input').value;
+            const errorMsg = document.getElementById('otp-error-msg');
+            
+            if (!otpCode || otpCode.length !== 6) {
+                errorMsg.innerText = "Please enter a valid 6-digit OTP.";
+                errorMsg.classList.remove('hidden');
+                return;
+            }
+            
+            verifyBtn.disabled = true;
+            verifyBtn.innerText = 'Verifying...';
+            errorMsg.classList.add('hidden');
+            
+            try {
+                const res = await fetch('/api/EmailVerificationController.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ action: 'verify', otp: otpCode })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    window.location.reload(); // Reload to show verified badge
+                } else {
+                    errorMsg.innerText = data.error || 'Verification failed';
+                    errorMsg.classList.remove('hidden');
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerText = 'Verify';
+                }
+            } catch (e) {
+                console.error(e);
+                errorMsg.innerText = 'Network error';
+                errorMsg.classList.remove('hidden');
+                verifyBtn.disabled = false;
+                verifyBtn.innerText = 'Verify';
+            }
+        });
+    }
+});
+</script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

@@ -19,15 +19,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'All fields are required.';
     } else {
         // Check if email already exists
-        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->execute([$email]);
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ? AND tenant_id = ?");
+        $stmt->execute([$email, CURRENT_TENANT_ID]);
         if ($stmt->rowCount() > 0) {
             $error = 'Email is already registered.';
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("INSERT INTO users (name, email, phone, password, role) VALUES (?, ?, ?, ?, 'user')");
+            $stmt = $pdo->prepare("INSERT INTO users (tenant_id, name, email, phone, password, role) VALUES (?, ?, ?, ?, ?, 'user')");
 
-            if ($stmt->execute([$name, $email, $phone, $hashedPassword])) {
+            if ($stmt->execute([CURRENT_TENANT_ID, $name, $email, $phone, $hashedPassword])) {
                 // Auto login after registration
                 $userId = $pdo->lastInsertId();
                 $_SESSION['user_id'] = $userId;
@@ -48,7 +48,7 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-xl rounded-lg mb-10">
     <div class="flex justify-center mb-4 py-5">
-        <img src="/frontend/public/logo-dark.png" alt="Khushi Home Sofa Repairing Logo" class="h-30 w-auto scale-150" />
+        <img src="/frontend/public/logo-dark.png" alt="Silva Furniture Logo" class="h-30 w-auto scale-150" />
     </div>
     <h1 class="text-3xl font-bold text-center mb-6">Customer Registration</h1>
 

@@ -15,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($email) || empty($password)) {
         $error = 'Email and password are required.';
     } else {
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->execute([$email]);
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND tenant_id = ?");
+        $stmt->execute([$email, CURRENT_TENANT_ID]);
         $user = $stmt->fetch();
 
         if ($user && password_verify($password, $user->password)) {
@@ -42,7 +42,7 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-xl rounded-lg">
     <div class="flex justify-center mb-4 py-5">
-        <img src="/frontend/public/logo-dark.png" alt="Khushi Home Sofa Repairing Logo" class="h-30 w-auto scale-150" />
+        <img src="/frontend/public/logo-dark.png" alt="Silva Furniture Logo" class="h-30 w-auto scale-150" />
     </div>
     <h1 class="text-3xl font-bold text-center mb-6">Customer Login</h1>
 

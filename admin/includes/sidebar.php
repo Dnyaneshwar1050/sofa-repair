@@ -6,7 +6,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <!-- Header Logo -->
     <div class="pt-8 pb-6 px-6 flex flex-col items-center justify-center border-b border-light-blue-900/30">
         <h1 class="text-[#fbbd06] text-2xl font-serif-custom font-bold text-center leading-tight tracking-wide">
-            Khushi Home<br>Sofa Repairing
+            Silva<br>Furniture
         </h1>
     </div>
 

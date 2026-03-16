@@ -63,8 +63,8 @@ require_once __DIR__ . '/includes/header.php';
                                 <i class="fa-solid fa-envelope mt-1 text-orange-500 text-xl"></i>
                                 <div>
                                     <h4 class="font-semibold mb-1">Email Address</h4>
-                                    <a href="mailto:info@khushihomesofarepairing.com"
-                                        class="text-gray-400 text-sm hover:text-white transition-colors break-all">info@khushihomesofarepairing.com</a>
+                                    <a href="mailto:info@silvafurniture.com"
+                                        class="text-gray-400 text-sm hover:text-white transition-colors break-all">info@silvafurniture.com</a>
                                 </div>
                             </div>
                         </div>

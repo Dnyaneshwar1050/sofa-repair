@@ -17,6 +17,42 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
+// --- Multi-Tenant Resolution ---
+$domain = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$subdomain = 'www'; // default
+
+// Basic extraction of subdomain from domain
+// Matches something like tenant.example.com
+$parts = explode('.', $domain);
+if (count($parts) >= 3 && $parts[0] !== 'www') {
+    $subdomain = $parts[0];
+}
+
+// If testing locally (e.g. localhost:8000), you might pass tenant via query param for debugging
+if (isset($_GET['tenant'])) {
+    $subdomain = preg_replace('/[^a-zA-Z0-9-]/', '', $_GET['tenant']);
+}
+
+// Fetch the tenant ID
+$stmt = $pdo->prepare("SELECT * FROM tenants WHERE subdomain = ? LIMIT 1");
+$stmt->execute([$subdomain]);
+$currentTenant = $stmt->fetch();
+
+if (!$currentTenant) {
+    // Fallback to default shop if tenant not found
+    $stmt = $pdo->prepare("SELECT * FROM tenants WHERE subdomain = 'www' LIMIT 1");
+    $stmt->execute();
+    $currentTenant = $stmt->fetch();
+    
+    if (!$currentTenant) {
+        die("System error: No default tenant found.");
+    }
+}
+
+// Store globally for easy access
+define('CURRENT_TENANT_ID', $currentTenant->id);
+$GLOBALS['current_tenant'] = $currentTenant;
+
 // Helper function for sending JSON response
 function sendJson($data, $status = 200)
 {

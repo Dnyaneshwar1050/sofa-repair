@@ -55,7 +55,7 @@ require_once __DIR__ . '/includes/header.php';
                         <?= date('F d, Y', strtotime($blog->created_at)) ?>
                     </span>
                     <span class="flex items-center"><i class="fa-solid fa-user-circle text-orange-500 mr-2 text-lg"></i>
-                        Khushi Admin</span>
+                        Silva Admin</span>
                 </div>
 
                 <h1 class="text-3xl md:text-5xl font-black text-gray-900 mb-8 leading-tight">

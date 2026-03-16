@@ -13,53 +13,64 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="bg-gray-50 min-h-screen text-gray-900">
-    <!-- Hero Search -->
-    <section class="bg-gradient-to-br from-orange-50 to-white px-1 pt-10 pb-16 lg:px-3 text-center">
-        <h1 class="text-4xl md:text-5xl font-black text-gray-900 mb-3">Your Home Service Hub</h1>
-        <p class="text-lg text-gray-600 mb-8">Find trusted local professionals near you</p>
+    <!-- Premium Hero Section -->
+    <section class="relative bg-white pt-20 pb-24 overflow-hidden">
+        <!-- Abstract gradient mesh backgrounds -->
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-brand-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+        <div class="absolute top-0 -right-40 w-96 h-96 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-40 left-20 w-96 h-96 bg-yellow-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
 
-        <form action="/services.php" method="GET"
-            class="flex flex-col md:flex-row items-center justify-center max-w-2xl mx-auto bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
-            <input type="text" name="q" placeholder="Search for services..."
-                class="grow p-3 text-gray-800 focus:outline-none w-full" />
-            <button type="submit"
-                class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 transition-colors font-semibold w-full md:w-auto">
-                <i class="fa-solid fa-search"></i>
-            </button>
-        </form>
+        <div class="relative max-w-5xl mx-auto px-4 text-center z-10">
+            <h1 class="text-5xl md:text-7xl font-heading font-extrabold text-gray-900 mb-6 tracking-tight leading-tight">
+                Your Premium <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-orange-400">Home Service Hub</span>
+            </h1>
+            <p class="text-xl text-gray-500 mb-10 max-w-2xl mx-auto font-light">Find trusted, top-rated local professionals near you in seconds.</p>
 
-        <div class="mt-10">
-            <h3 class="text-xl font-bold mb-4 text-gray-900">Browse Categories</h3>
-            <!-- Categories Scroll List -->
-            <div class="flex overflow-x-auto gap-4 py-4 px-2 hide-scrollbar justify-start md:justify-center">
-                <?php if (count($categories) > 0): ?>
-                    <?php foreach ($categories as $category): ?>
-                        <a href="/services.php?category_id=<?= $category->id ?>"
-                            class="flex-shrink-0 w-32 md:w-40 flex flex-col items-center gap-3 group">
-                            <div
-                                class="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-white shadow-md overflow-hidden bg-white transition-transform group-hover:scale-105">
-                                <img src="/frontend/public/<?= htmlspecialchars($category->image) ?>"
-                                    alt="<?= htmlspecialchars($category->name) ?>" class="w-full h-full object-cover"
-                                    onerror="this.src='/frontend/public/default-category.png'">
-                            </div>
-                            <span
-                                class="text-sm md:text-base font-semibold text-gray-800 text-center group-hover:text-orange-600 transition-colors">
-                                <?= htmlspecialchars($category->name) ?>
-                            </span>
-                        </a>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p class="text-gray-500 w-full">No categories available.</p>
-                <?php endif; ?>
+            <form action="/services.php" method="GET"
+                class="flex flex-col md:flex-row items-center justify-center max-w-3xl mx-auto bg-white/80 backdrop-blur-xl border border-white/50 rounded-full shadow-premium p-2 transition-transform hover:scale-[1.02] duration-300">
+                <div class="flex-grow flex items-center pl-6 w-full md:w-auto">
+                    <i class="fa-solid fa-search text-gray-400 text-lg"></i>
+                    <input type="text" name="q" placeholder="What service do you need today?"
+                        class="grow p-4 text-gray-800 bg-transparent focus:outline-none w-full placeholder-gray-400 font-medium" />
+                </div>
+                <button type="submit"
+                    class="bg-brand-600 hover:bg-brand-700 text-white px-8 py-4 rounded-full font-semibold w-full md:w-auto shadow-md transition-all active:scale-95 whitespace-nowrap">
+                    Search Now
+                </button>
+            </form>
+
+            <div class="mt-16">
+                <!-- Categories Scroll List -->
+                <div class="flex overflow-x-auto gap-6 py-6 px-4 hide-scrollbar justify-start md:justify-center">
+                    <?php if (count($categories) > 0): ?>
+                        <?php foreach ($categories as $category): ?>
+                            <a href="/services.php?category_id=<?= $category->id ?>"
+                                class="flex-shrink-0 w-32 flex flex-col items-center gap-4 group cursor-pointer">
+                                <div
+                                    class="w-20 h-20 rounded-2xl shadow-soft group-hover:shadow-premium bg-white transition-all duration-300 group-hover:-translate-y-2 flex items-center justify-center overflow-hidden border border-gray-50">
+                                    <img src="/frontend/public/<?= htmlspecialchars($category->image) ?>"
+                                        alt="<?= htmlspecialchars($category->name) ?>" class="w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-300"
+                                        onerror="this.src='/frontend/public/default-category.png'">
+                                </div>
+                                <span
+                                    class="text-sm font-semibold text-gray-600 text-center group-hover:text-brand-600 transition-colors">
+                                    <?= htmlspecialchars($category->name) ?>
+                                </span>
+                            </a>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-gray-500 w-full">No categories available.</p>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Categories Section with Services -->
-    <section class="max-w-6xl mx-auto px-4 py-12">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-3xl font-black">Featured Services</h2>
-            <div class="h-1 w-24 bg-orange-500 rounded-full"></div>
+    <section class="max-w-6xl mx-auto px-4 py-20">
+        <div class="flex flex-col items-center mb-12 text-center">
+            <h2 class="text-4xl font-heading font-bold text-gray-900 mb-4">Featured Services</h2>
+            <p class="text-gray-500 max-w-2xl">Discover our most popular repair and cleaning solutions tailored for your premium furniture.</p>
         </div>
 
         <div class="space-y-12">
@@ -86,29 +97,27 @@ require_once __DIR__ . '/includes/header.php';
                         <div class="flex overflow-x-auto gap-6 pb-4 hide-scrollbar snap-x">
                             <?php foreach ($services as $service): ?>
                                 <div
-                                    class="snap-start flex-shrink-0 w-64 md:w-72 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all group">
-                                    <div class="relative h-48 overflow-hidden">
+                                    class="snap-start flex-shrink-0 w-72 md:w-80 bg-white rounded-2xl shadow-soft border border-gray-100 overflow-hidden hover:shadow-premium transition-all duration-300 group">
+                                    <div class="relative h-56 overflow-hidden">
                                         <img src="/frontend/public/<?= htmlspecialchars($service->image) ?>"
                                             alt="<?= htmlspecialchars($service->name) ?>"
-                                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                             onerror="this.src='/frontend/public/default-service.png'">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                                        <div class="absolute bottom-4 left-4 text-white">
-                                            <h4 class="font-bold text-lg mb-1">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent"></div>
+                                        <div class="absolute bottom-5 left-5 right-5 text-white">
+                                            <h4 class="font-heading font-bold text-xl mb-1 leading-tight">
                                                 <?= htmlspecialchars($service->name) ?>
                                             </h4>
-                                            <p class="text-sm text-gray-200">Starting at ₹
-                                                <?= number_format($service->base_price, 2) ?>
-                                            </p>
+                                            <p class="text-sm font-medium text-brand-100">Starting at ₹<?= number_format($service->base_price, 2) ?></p>
                                         </div>
                                     </div>
-                                    <div class="p-4">
-                                        <p class="text-gray-600 text-sm line-clamp-2 mb-4">
+                                    <div class="p-6">
+                                        <p class="text-gray-500 text-sm line-clamp-2 mb-6 leading-relaxed">
                                             <?= htmlspecialchars($service->description) ?>
                                         </p>
                                         <a href="/service-details.php?id=<?= $service->id ?>"
-                                            class="w-full block text-center bg-orange-50 text-orange-600 font-semibold py-2 rounded-xl group-hover:bg-orange-600 group-hover:text-white transition-colors">
-                                            Book Now
+                                            class="w-full flex items-center justify-center bg-gray-50 text-gray-700 font-semibold py-3 rounded-xl group-hover:bg-brand-600 group-hover:text-white transition-all duration-300">
+                                            Book Now <i class="fa-solid fa-arrow-right ml-2 opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0 duration-300"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -136,25 +145,25 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                     <?php foreach ($blogs as $blog): ?>
                         <article
-                            class="bg-gray-50 border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            class="bg-white border border-gray-100 shadow-soft hover:shadow-premium rounded-2xl overflow-hidden transition-all duration-300 group">
                             <?php if ($blog->image): ?>
-                                <a href="/blog.php?slug=<?= htmlspecialchars($blog->slug) ?>">
+                                <a href="/blog.php?slug=<?= htmlspecialchars($blog->slug) ?>" class="block relative h-52 overflow-hidden">
                                     <img src="<?= htmlspecialchars($blog->image) ?>" alt="<?= htmlspecialchars($blog->title) ?>"
-                                        class="w-full h-48 object-cover" />
+                                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                                 </a>
                             <?php endif; ?>
-                            <div class="p-6">
-                                <h3 class="text-lg font-bold mb-2 hover:text-orange-600 transition-colors">
+                            <div class="p-8">
+                                <h3 class="text-xl font-heading font-bold mb-3 text-gray-900 group-hover:text-brand-600 transition-colors leading-snug">
                                     <a href="/blog.php?slug=<?= htmlspecialchars($blog->slug) ?>">
                                         <?= htmlspecialchars($blog->title) ?>
                                     </a>
                                 </h3>
-                                <p class="text-gray-600 text-sm line-clamp-3 mb-4">
+                                <p class="text-gray-500 text-sm line-clamp-3 mb-6 leading-relaxed">
                                     <?= htmlspecialchars(strip_tags($blog->content)) ?>
                                 </p>
                                 <a href="/blog.php?slug=<?= htmlspecialchars($blog->slug) ?>"
-                                    class="inline-flex items-center text-orange-600 font-semibold text-sm">
-                                    Read More <i class="fa-solid fa-arrow-right ml-1"></i>
+                                    class="inline-flex items-center text-brand-600 font-semibold text-sm hover:text-brand-700 transition-colors">
+                                    Read Article <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                                 </a>
                             </div>
                         </article>
@@ -167,22 +176,25 @@ require_once __DIR__ . '/includes/header.php';
     </section>
 
     <!-- Contact Section -->
-    <section class="bg-gradient-to-r from-orange-600 to-orange-500 text-white py-12">
-        <div class="max-w-5xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-black mb-3">Need Assistance?</h2>
-            <p class="text-lg mb-6">Our experts are always ready to help.</p>
-            <div class="space-y-4">
-                <a href="tel:+919689861811" class="block text-lg hover:text-orange-100">
-                    📞 +919689861811
+    <section class="bg-gradient-to-tr from-brand-900 to-brand-700 text-white py-20 relative overflow-hidden">
+        <!-- Abstract pattern -->
+        <div class="absolute right-0 top-0 opacity-10">
+            <svg width="404" height="384" fill="none" viewBox="0 0 404 384"><defs><pattern id="d3eb07ae-5182-43e6-857d-35c643af9034" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="4" height="4" fill="currentColor"></rect></pattern></defs><rect width="404" height="384" fill="url(#d3eb07ae-5182-43e6-857d-35c643af9034)"></rect></svg>
+        </div>
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+            <h2 class="text-4xl font-heading font-extrabold mb-4">Ready for a Premium Makeover?</h2>
+            <p class="text-xl text-brand-100 mb-10 max-w-2xl mx-auto font-light">Join thousands of happy customers who trust Silva Furniture for their restoration needs.</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="/contact.php"
+                    class="bg-white text-brand-700 font-bold px-8 py-4 rounded-full hover:bg-brand-50 shadow-lg active:scale-95 transition-all text-lg w-full sm:w-auto">
+                    Contact Us Today
                 </a>
-                <a href="mailto:info@khushihomesofarepairing.com" class="block text-lg hover:text-orange-100">
-                    📧 info@khushihomesofarepairing.com
+                <a href="tel:+919689861811"
+                    class="bg-transparent border border-white/30 text-white font-bold px-8 py-4 rounded-full hover:bg-white/10 active:scale-95 transition-all text-lg w-full sm:w-auto backdrop-blur-sm">
+                    <i class="fa-solid fa-phone mr-2"></i> +91 9689861811
                 </a>
             </div>
-            <a href="/contact.php"
-                class="inline-block mt-6 bg-white text-orange-600 font-semibold px-6 py-2 rounded-lg hover:bg-orange-50 transition-colors">
-                Contact Us
-            </a>
         </div>
     </section>
 </div>

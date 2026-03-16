@@ -3,56 +3,62 @@ $current_page = basename($_SERVER['PHP_SELF']);
 $isLoggedIn = isLoggedIn();
 $userRole = $_SESSION['user_role'] ?? 'user';
 ?>
-<nav class="bg-white text-gray-900 shadow-lg border-b-2 border-gray-100 sticky top-0 z-50">
+<nav class="bg-white/80 backdrop-blur-md text-gray-900 border-b border-gray-100 sticky top-0 z-50 transition-all duration-300 shadow-sm">
     <div class="container mx-auto px-4 py-2">
         <div class="flex justify-between items-center">
             <!-- Logo -->
             <a href="/" class="flex items-center">
                 <!-- Using frontend logo for now -->
-                <img src="/frontend/public/logo-light.png" alt="Khushi Home Sofa Repairing"
+                <img src="/frontend/public/logo-light.png" alt="Silva Furniture"
                     class="h-12 w-auto scale-150 ml-4 hidden dark:block" id="logo-dark">
-                <img src="/frontend/public/logo-dark.png" alt="Khushi Home Sofa Repairing"
+                <img src="/frontend/public/logo-dark.png" alt="Silva Furniture"
                     class="h-12 w-auto scale-150 ml-4 block dark:hidden" id="logo-light">
             </a>
 
             <!-- Desktop Navigation -->
             <div class="hidden lg:flex space-x-4 items-center">
                 <a href="/"
-                    class="text-lg font-medium transition-colors p-2 <?= ($current_page == 'index.php' || $current_page == '') ? 'text-orange-500 font-bold border-b-2 border-orange-500' : 'text-gray-700 hover:text-orange-500' ?>">Home</a>
+                    class="text-sm tracking-wide font-semibold transition-colors p-2 <?= ($current_page == 'index.php' || $current_page == '') ? 'text-brand-600 border-b-2 border-brand-600' : 'text-gray-600 hover:text-brand-600' ?>">Home</a>
                 <a href="/blog.php"
-                    class="text-lg font-medium transition-colors p-2 <?= ($current_page == 'blog.php') ? 'text-orange-500 font-bold border-b-2 border-orange-500' : 'text-gray-700 hover:text-orange-500' ?>">Blog</a>
+                    class="text-sm tracking-wide font-semibold transition-colors p-2 <?= ($current_page == 'blog.php') ? 'text-brand-600 border-b-2 border-brand-600' : 'text-gray-600 hover:text-brand-600' ?>">Blog</a>
                 <a href="/contact.php"
-                    class="text-lg font-medium transition-colors p-2 <?= ($current_page == 'contact.php') ? 'text-orange-500 font-bold border-b-2 border-orange-500' : 'text-gray-700 hover:text-orange-500' ?>">Contact</a>
+                    class="text-sm tracking-wide font-semibold transition-colors p-2 <?= ($current_page == 'contact.php') ? 'text-brand-600 border-b-2 border-brand-600' : 'text-gray-600 hover:text-brand-600' ?>">Contact</a>
 
                 <?php if ($isLoggedIn && $userRole === 'provider'): ?>
                     <a href="/provider-services.php"
-                        class="text-lg font-medium transition-colors p-2 text-gray-700 hover:text-orange-500">My
+                        class="text-sm tracking-wide font-semibold transition-colors p-2 text-gray-600 hover:text-brand-600">My
                         Services</a>
                     <a href="/my-jobs.php"
-                        class="text-lg font-medium transition-colors p-2 text-gray-700 hover:text-orange-500">My Jobs</a>
+                        class="text-sm tracking-wide font-semibold transition-colors p-2 text-gray-600 hover:text-brand-600">My Jobs</a>
                 <?php endif; ?>
 
                 <?php if ($isLoggedIn && in_array($userRole, ['admin', 'superadmin'])): ?>
                     <a href="/admin/index.php"
-                        class="text-lg font-medium transition-colors p-2 text-gray-700 hover:text-orange-500">Admin</a>
+                        class="text-sm tracking-wide font-semibold transition-colors p-2 text-gray-600 hover:text-brand-600">Admin</a>
                 <?php endif; ?>
 
                 <?php if ($isLoggedIn): ?>
-                    <div class="flex items-center space-x-3">
+                    <div class="flex items-center space-x-4 pl-4 border-l border-gray-200">
                         <a href="/profile.php"
-                            class="text-lg font-medium transition-colors p-2 text-gray-700 hover:text-orange-500">
-                            <i class="fa-solid fa-circle-user mr-1"></i> Profile
+                            class="text-sm tracking-wide font-semibold transition-colors text-gray-600 hover:text-brand-600">
+                            <i class="fa-solid fa-circle-user mr-1 text-lg align-middle"></i> Profile
                         </a>
                         <a href="/my-bookings.php"
-                            class="text-lg font-medium transition-colors p-2 text-gray-700 hover:text-orange-500">My
+                            class="text-sm tracking-wide font-semibold transition-colors text-gray-600 hover:text-brand-600">My
                             Requests</a>
+                        <div class="relative inline-block cursor-pointer px-1">
+                            <i class="fa-solid fa-bell text-gray-500 text-lg hover:text-brand-600 transition-colors"></i>
+                            <span id="notification-badge" class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-[10px] w-4 h-4 flex items-center justify-center font-bold shadow-sm" style="display: none;">0</span>
+                        </div>
                         <a href="/logout.php"
-                            class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-red-700 active:scale-95 transition-all shadow-md">Logout</a>
+                            class="bg-gray-100 text-gray-700 px-5 py-2 rounded-full text-sm font-semibold hover:bg-gray-200 active:scale-95 transition-all">Logout</a>
                     </div>
                 <?php else: ?>
-                    <a href="/login.php"
-                        class="bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-orange-500 active:scale-95 transition-all shadow-md">Login
-                        / Register</a>
+                    <div class="pl-4 border-l border-gray-200">
+                        <a href="/login.php"
+                            class="bg-brand-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brand-700 hover:shadow-lg active:scale-95 transition-all">Login
+                            / Register</a>
+                    </div>
                 <?php endif; ?>
             </div>
 
@@ -67,44 +73,44 @@ $userRole = $_SESSION['user_role'] ?? 'user';
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden lg:hidden mt-4 pb-4 space-y-2 border-t pt-4 animate-slideDown">
             <a href="/"
-                class="block text-lg font-medium transition-all p-3 rounded-lg <?= ($current_page == 'index.php' || $current_page == '') ? 'bg-orange-500 text-white font-bold shadow-md' : 'text-gray-700 hover:bg-gray-100' ?>">🏠
+                class="block text-base font-medium transition-all p-3 rounded-lg <?= ($current_page == 'index.php' || $current_page == '') ? 'bg-brand-50 text-brand-700 font-bold' : 'text-gray-600 hover:bg-gray-50 hover:text-brand-600' ?>">🏠
                 Home</a>
             <a href="/blog.php"
-                class="block text-lg font-medium transition-all p-3 rounded-lg <?= ($current_page == 'blog.php') ? 'bg-orange-500 text-white font-bold shadow-md' : 'text-gray-700 hover:bg-gray-100' ?>">📝
+                class="block text-base font-medium transition-all p-3 rounded-lg <?= ($current_page == 'blog.php') ? 'bg-brand-50 text-brand-700 font-bold' : 'text-gray-600 hover:bg-gray-50 hover:text-brand-600' ?>">📝
                 Blog</a>
             <a href="/contact.php"
-                class="block text-lg font-medium transition-all p-3 rounded-lg <?= ($current_page == 'contact.php') ? 'bg-orange-500 text-white font-bold shadow-md' : 'text-gray-700 hover:bg-gray-100' ?>">📞
+                class="block text-base font-medium transition-all p-3 rounded-lg <?= ($current_page == 'contact.php') ? 'bg-brand-50 text-brand-700 font-bold' : 'text-gray-600 hover:bg-gray-50 hover:text-brand-600' ?>">📞
                 Contact</a>
 
             <?php if ($isLoggedIn && $userRole === 'provider'): ?>
                 <a href="/provider-services.php"
-                    class="block text-lg font-medium transition-all p-3 rounded-lg text-gray-700 hover:bg-gray-100">🛠️ My
+                    class="block text-base font-medium transition-all p-3 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-brand-600">🛠️ My
                     Services</a>
                 <a href="/my-jobs.php"
-                    class="block text-lg font-medium transition-all p-3 rounded-lg text-gray-700 hover:bg-gray-100">💼 My
+                    class="block text-base font-medium transition-all p-3 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-brand-600">💼 My
                     Jobs</a>
             <?php endif; ?>
 
             <?php if ($isLoggedIn && in_array($userRole, ['admin', 'superadmin'])): ?>
                 <a href="/admin/index.php"
-                    class="block text-lg font-medium transition-all p-3 rounded-lg text-gray-700 hover:bg-gray-100">⚙️ Admin
+                    class="block text-base font-medium transition-all p-3 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-brand-600">⚙️ Admin
                     Panel</a>
             <?php endif; ?>
 
             <?php if ($isLoggedIn): ?>
                 <a href="/profile.php"
-                    class="block text-lg font-medium transition-all p-3 rounded-lg text-gray-700 hover:bg-gray-100">
+                    class="block text-base font-medium transition-all p-3 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-brand-600">
                     <i class="fa-solid fa-circle-user mr-2"></i> Profile
                 </a>
                 <a href="/my-bookings.php"
-                    class="block text-lg font-medium transition-all p-3 rounded-lg text-gray-700 hover:bg-gray-100">📋 My
+                    class="block text-base font-medium transition-all p-3 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-brand-600">📋 My
                     Requests</a>
                 <a href="/logout.php"
-                    class="w-full text-center block bg-red-600 text-white px-4 py-3 rounded-lg text-base font-semibold hover:bg-red-700 active:scale-95 transition-all shadow-md">🚪
+                    class="w-full text-center block bg-gray-100 text-gray-700 mt-4 px-4 py-3 rounded-xl text-sm font-semibold hover:bg-gray-200 active:scale-95 transition-all">🚪
                     Logout</a>
             <?php else: ?>
                 <a href="/login.php"
-                    class="block text-center bg-blue-600 text-white px-4 py-3 rounded-lg text-base font-semibold hover:bg-orange-500 active:scale-95 transition-all shadow-md">🔐
+                    class="block text-center mt-4 bg-brand-600 text-white px-4 py-3 rounded-xl text-sm font-semibold hover:bg-brand-700 shadow-md active:scale-95 transition-all">🔐
                     Login / Register</a>
             <?php endif; ?>
         </div>
