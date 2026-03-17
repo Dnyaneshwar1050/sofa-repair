@@ -6,7 +6,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <!-- Header Logo -->
     <div class="pt-8 pb-6 px-6 flex flex-col items-center justify-center border-b border-light-blue-900/30">
         <h1 class="text-[#fbbd06] text-2xl font-serif-custom font-bold text-center leading-tight tracking-wide">
-            Silva<br>Furniture
+            Khushi Home<br>Sofa Repairing
         </h1>
     </div>
 
@@ -98,8 +98,24 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </a>
             </li>
 
+            <li class="px-2">
+                <a href="#"
+                    class="text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200">
+                    <i class="fa-solid fa-magnifying-glass-chart w-8 text-center text-lg"></i>
+                    SEO Management
+                </a>
+            </li>
+
+            <li class="px-2">
+                <a href="#"
+                    class="text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200">
+                    <i class="fa-solid fa-palette w-8 text-center text-lg"></i>
+                    <div class="leading-tight">Shop Branding &<br><span class="text-xs">Contact</span></div>
+                </a>
+            </li>
+
             <li class="px-2 pt-6">
-                <a href="#" class="bg-[#fbbd06] text-black border-l-4 border-transparent rounded group flex items-center mx-4 px-4 py-3 text-sm font-bold shadow-md transition-all duration-200">
+                <a href="/admin/settings.php" class="<?= ($current_page == 'settings.php') ? 'bg-[#fbbd06] text-black' : 'bg-[#fbbd06] text-black' ?> border-l-4 border-transparent rounded group flex items-center mx-4 px-4 py-3 text-sm font-bold shadow-md transition-all duration-200">
                     <i class="fa-solid fa-gear w-8 text-center text-lg"></i>
                     System Settings
                 </a>
