@@ -22,14 +22,14 @@
         <!-- Quick Links -->
         <div>
             <h4 class="text-lg font-heading font-bold mb-6 text-white flex items-center gap-2"><div class="w-2 h-2 bg-brand-500 rounded-full"></div> Quick Links</h4>
-            <ul class="space-y-3">
-                <li><a href="/" class="text-sm text-gray-400 hover:text-brand-400 transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-gray-600 text-xs"></i> Home</a></li>
-                <li><a href="/my-bookings.php" class="text-sm text-gray-400 hover:text-brand-400 transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-gray-600 text-xs"></i> My Requests</a></li>
-                <li><a href="/blog.php" class="text-sm text-gray-400 hover:text-brand-400 transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-gray-600 text-xs"></i> Blog & News</a></li>
-                <li><a href="/contact.php" class="text-sm text-gray-400 hover:text-brand-400 transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-gray-600 text-xs"></i> Contact Us</a></li>
-                <li><a href="/policy.php" class="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-gray-600 text-xs"></i> Refund Policy</a></li>
-                <li><a href="/privacy.php" class="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-gray-600 text-xs"></i> Privacy Policy</a></li>
-            </ul>
+                <ul class="space-y-3">
+                    <li><a href="/" class="text-gray-400 hover:text-orange-500 transition-colors flex items-center"><i class="fa-solid fa-chevron-right text-[10px] mr-2"></i> Home</a></li>
+                    <li><a href="/my-bookings.php" class="text-gray-400 hover:text-orange-500 transition-colors flex items-center"><i class="fa-solid fa-chevron-right text-[10px] mr-2"></i> My Requests</a></li>
+                    <li><a href="/blog.php" class="text-gray-400 hover:text-orange-500 transition-colors flex items-center"><i class="fa-solid fa-chevron-right text-[10px] mr-2"></i> Blog & News</a></li>
+                    <li><a href="/contact.php" class="text-gray-400 hover:text-orange-500 transition-colors flex items-center"><i class="fa-solid fa-chevron-right text-[10px] mr-2"></i> Contact Us</a></li>
+                    <li><a href="/refund-policy.php" class="text-gray-400 hover:text-orange-500 transition-colors flex items-center"><i class="fa-solid fa-chevron-right text-[10px] mr-2"></i> Refund Policy</a></li>
+                    <li><a href="/terms.php" class="text-gray-400 hover:text-orange-500 transition-colors flex items-center"><i class="fa-solid fa-chevron-right text-[10px] mr-2"></i> Terms & Conditions</a></li>
+                </ul>
         </div>
 
         <!-- Services -->

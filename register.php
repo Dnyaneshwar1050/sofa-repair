@@ -98,8 +98,8 @@ require_once __DIR__ . '/includes/header.php';
             <div class="mt-8 pt-6 border-t border-gray-100">
                 <p class="text-center text-xs text-gray-400 leading-relaxed">
                     By continuing you agree to our<br/>
-                    <a href="/policy.php" class="text-gray-500 hover:text-brand-600 transition-colors">Refund Policy</a> &middot;
-                    <a href="/privacy.php" class="text-gray-500 hover:text-brand-600 transition-colors">Privacy</a> &middot;
+                    <a href="/refund-policy.php" class="text-gray-500 hover:text-brand-600 transition-colors">Refund Policy</a> &middot;
+                    <a href="/privacy-policy.php" class="text-gray-500 hover:text-brand-600 transition-colors">Privacy</a> &middot;
                     <a href="/terms.php" class="text-gray-500 hover:text-brand-600 transition-colors">Terms</a>
                 </p>
             </div>

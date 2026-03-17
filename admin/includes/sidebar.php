@@ -1,6 +1,14 @@
 <?php
 // admin/includes/sidebar.php
 $current_page = basename($_SERVER['PHP_SELF']);
+
+// Fetch unread notifications count
+try {
+    $unread_stmt = $pdo->query("SELECT COUNT(*) FROM notifications WHERE status = 'unread'");
+    $unread_count = $unread_stmt->fetchColumn();
+} catch (Exception $e) {
+    $unread_count = 0;
+}
 ?>
 <aside class="w-[280px] bg-[#253b70] h-full flex flex-col shrink-0 relative z-20 text-white shadow-xl">
     <!-- Header Logo -->
@@ -62,13 +70,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <li class="my-4 border-t border-white/10 mx-6"></li>
 
             <li class="px-2">
-                <a href="#"
-                    class="text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent group flex items-center justify-between px-4 py-3 text-sm font-semibold transition-all duration-200">
+                <a href="/admin/notifications.php"
+                    class="<?= ($current_page == 'notifications.php') ? 'bg-[#fbbd06] text-black border-l-4 border-transparent shadow-md' : 'text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent' ?> group flex items-center justify-between px-4 py-3 text-sm font-semibold transition-all duration-200 rounded">
                     <div class="flex items-center">
                         <i class="fa-solid fa-bell w-8 text-center text-lg"></i>
                         Notifications
                     </div>
-                    <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">20</span>
+                    <?php if ($unread_count > 0): ?>
+                    <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full"><?= $unread_count ?></span>
+                    <?php endif; ?>
                 </a>
             </li>
 
@@ -84,8 +94,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </li>
 
             <li class="px-2">
-                <a href="#"
-                    class="text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200">
+                <a href="/admin/contact_messages.php"
+                    class="<?= ($current_page == 'contact_messages.php') ? 'bg-[#fbbd06] text-black border-l-4 border-transparent shadow-md' : 'text-gray-300 hover:bg-white/5 hover:text-white border-l-4 border-transparent' ?> group flex items-center px-4 py-3 text-sm font-semibold transition-all duration-200 rounded">
                     <i class="fa-solid fa-envelope w-8 text-center text-lg"></i>
                     Contact Messages
                 </a>
