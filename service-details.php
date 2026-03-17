@@ -92,7 +92,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     <img src="/frontend/public/<?= htmlspecialchars($service->image) ?>"
                         alt="<?= htmlspecialchars($service->name) ?>" class="w-full h-80 object-cover"
-                        onerror="this.src='/frontend/public/default-service.png'">
+                        onerror="this.onerror=null;this.src='/frontend/public/default-service.png'">
                     <div class="p-8">
                         <div class="flex justify-between items-start mb-6">
                             <div>

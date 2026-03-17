@@ -116,7 +116,7 @@ require_once __DIR__ . '/includes/header.php';
                             <img src="/frontend/public/<?= htmlspecialchars($category->image) ?>"
                                 alt="<?= htmlspecialchars($category->name) ?>"
                                 class="w-12 h-12 rounded bg-gray-100 object-cover"
-                                onerror="this.src='/frontend/public/default-category.png'">
+                                onerror="this.onerror=null;this.src='/frontend/public/default-category.png'">
                         </td>
                         <td class="p-4 font-medium text-gray-800">
                             <?= htmlspecialchars($category->name) ?>

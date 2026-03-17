@@ -50,7 +50,7 @@ require_once __DIR__ . '/includes/header.php';
                                     class="w-20 h-20 rounded-2xl shadow-soft group-hover:shadow-premium bg-white transition-all duration-300 group-hover:-translate-y-2 flex items-center justify-center overflow-hidden border border-gray-50">
                                     <img src="/frontend/public/<?= htmlspecialchars($category->image) ?>"
                                         alt="<?= htmlspecialchars($category->name) ?>" class="w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-300"
-                                        onerror="this.src='/frontend/public/default-category.png'">
+                                        onerror="this.onerror=null;this.src='/frontend/public/default-category.png'">
                                 </div>
                                 <span
                                     class="text-sm font-semibold text-gray-600 text-center group-hover:text-brand-600 transition-colors">
@@ -102,7 +102,7 @@ require_once __DIR__ . '/includes/header.php';
                                         <img src="/frontend/public/<?= htmlspecialchars($service->image) ?>"
                                             alt="<?= htmlspecialchars($service->name) ?>"
                                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                            onerror="this.src='/frontend/public/default-service.png'">
+                                            onerror="this.onerror=null;this.src='/frontend/public/default-service.png'">
                                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent"></div>
                                         <div class="absolute bottom-5 left-5 right-5 text-white">
                                             <h4 class="font-heading font-bold text-xl mb-1 leading-tight">

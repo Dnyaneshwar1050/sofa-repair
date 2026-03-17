@@ -44,7 +44,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="relative h-64 md:h-96 w-full">
                 <img src="/frontend/public/<?= htmlspecialchars($blog->image) ?>"
                     alt="<?= htmlspecialchars($blog->title) ?>" class="w-full h-full object-cover"
-                    onerror="this.src='/frontend/public/default-blog.jpg'">
+                    onerror="this.onerror=null;this.src='/frontend/public/default-blog.jpg'">
             </div>
 
             <div class="p-8 md:p-12">
@@ -90,7 +90,7 @@ require_once __DIR__ . '/includes/header.php';
                                 <img src="/frontend/public/<?= htmlspecialchars($rb->image) ?>"
                                     alt="<?= htmlspecialchars($rb->title) ?>"
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                    onerror="this.src='/frontend/public/default-blog.jpg'">
+                                    onerror="this.onerror=null;this.src='/frontend/public/default-blog.jpg'">
                             </div>
                             <div class="p-5">
                                 <span class="text-xs font-bold text-orange-500 block mb-2">

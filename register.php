@@ -46,43 +46,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-xl rounded-lg mb-10">
-    <div class="flex justify-center mb-4 py-5">
-        <img src="/frontend/public/logo-dark.png" alt="Silva Furniture Logo" class="h-30 w-auto scale-150" />
-    </div>
-    <h1 class="text-3xl font-bold text-center mb-6">Customer Registration</h1>
+<div class="min-h-[calc(100vh-200px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-3xl shadow-premium border border-gray-100">
+        <div class="flex flex-col items-center justify-center text-center">
+            <img src="/frontend/public/logo-dark.png" alt="Silva Furniture Logo" class="h-16 w-auto mb-6 object-contain" />
+            <h2 class="text-3xl font-heading font-black text-gray-900 mb-2">Create Account</h2>
+            <p class="text-gray-500 font-medium">Join us for premium services</p>
+        </div>
 
-    <form method="POST" action="register.php" class="space-y-4">
-        <input type="text" name="name" placeholder="Full Name" required
-            class="w-full p-3 border border-gray-300 rounded" value="<?= htmlspecialchars($_POST['name'] ?? '') ?>" />
-        <input type="tel" name="phone" placeholder="Phone Number" required
-            class="w-full p-3 border border-gray-300 rounded" value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>" />
-        <input type="email" name="email" placeholder="Email Address" required
-            class="w-full p-3 border border-gray-300 rounded" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" />
-        <input type="password" name="password" placeholder="Password" required
-            class="w-full p-3 border border-gray-300 rounded" />
+        <form method="POST" action="register.php" class="mt-8 space-y-6">
+            <div class="space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+                    <input id="name" type="text" name="name" placeholder="John Doe" required
+                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" value="<?= htmlspecialchars($_POST['name'] ?? '') ?>" />
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
+                    <input id="phone" type="tel" name="phone" placeholder="+91 98765 43210" required
+                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>" />
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                    <input id="email" type="email" name="email" placeholder="you@example.com" required
+                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" />
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                    <input id="password" type="password" name="password" placeholder="••••••••" required
+                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" />
+                </div>
+            </div>
 
-        <?php if ($error): ?>
-            <p class="text-red-500 text-sm">
-                <?= htmlspecialchars($error) ?>
+            <?php if ($error): ?>
+                <div class="p-3 bg-red-50 text-red-600 rounded-xl text-sm font-medium border border-red-100 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <?= htmlspecialchars($error) ?>
+                </div>
+            <?php endif; ?>
+
+            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-md text-base font-bold text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-all active:scale-[0.98]">
+                Create Account
+            </button>
+        </form>
+
+        <div class="mt-6">
+            <p class="text-center text-sm text-gray-600 font-medium">
+                Already have an account?
+                <a href="/login.php" class="text-brand-600 hover:text-brand-700 font-bold hover:underline">Log in here</a>
             </p>
-        <?php endif; ?>
-
-        <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded font-semibold hover:bg-blue-700">
-            Register
-        </button>
-    </form>
-
-    <p class="text-center mt-4">
-        Already have an account?
-        <a href="/login.php" class="text-blue-600 font-medium hover:underline">Login here</a>
-    </p>
-    <p class="text-center text-xs text-gray-600 mt-3">
-        By continuing you agree to our
-        <a href="/policy.php" class="text-blue-600 underline">Refund & Cancellation Policy</a>,
-        <a href="/privacy.php" class="text-blue-600 underline">Privacy Policy</a> and
-        <a href="/terms.php" class="text-blue-600 underline">Terms & Conditions</a>.
-    </p>
+            <div class="mt-8 pt-6 border-t border-gray-100">
+                <p class="text-center text-xs text-gray-400 leading-relaxed">
+                    By continuing you agree to our<br/>
+                    <a href="/policy.php" class="text-gray-500 hover:text-brand-600 transition-colors">Refund Policy</a> &middot;
+                    <a href="/privacy.php" class="text-gray-500 hover:text-brand-600 transition-colors">Privacy</a> &middot;
+                    <a href="/terms.php" class="text-gray-500 hover:text-brand-600 transition-colors">Terms</a>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

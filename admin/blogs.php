@@ -131,7 +131,7 @@ require_once __DIR__ . '/includes/header.php';
                             <div class="flex items-center gap-4">
                                 <img src="/frontend/public/<?= htmlspecialchars($blog['image'] ?? 'default-blog.png') ?>"
                                     class="w-16 h-12 rounded object-cover border border-gray-200"
-                                    onerror="this.src='/frontend/public/default-service.png'">
+                                    onerror="this.onerror=null;this.src='/frontend/public/default-service.png'">
                                 <div>
                                     <p class="font-bold text-gray-800 text-sm mb-0.5 line-clamp-1">
                                         <?= htmlspecialchars($blog['title']) ?>

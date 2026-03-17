@@ -19,6 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $max_expected_price = trim($_POST['max_expected_price'] ?? 0);
         $is_disabled = isset($_POST['is_disabled']) ? 1 : 0;
         
+        // Handle image: If updating, start with existing image. If creating, start with default.
+        $image = $_POST['existing_image'] ?? 'default-service.png';
+        
         // Handle dynamic Service Options parsing
         $options_names = $_POST['option_name'] ?? [];
         $options_prices = $_POST['option_price'] ?? [];
@@ -51,19 +54,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         // Handle Multiple Gallery Images
         $gallery_images = [];
-        $existing_gallery = json_decode($_POST['existing_gallery'] ?? '[]', true) ?: [];
+        $existing_gallery_json = $_POST['existing_gallery'] ?? '[]';
+        $existing_gallery = json_decode($existing_gallery_json, true) ?: [];
         
         if (isset($_FILES['gallery_files'])) {
             $upload_dir = __DIR__ . '/../frontend/public/';
-            $file_count = count($_FILES['gallery_files']['name']);
             
-            for ($i = 0; $i < $file_count; $i++) {
-                if ($_FILES['gallery_files']['error'][$i] === UPLOAD_ERR_OK) {
-                    $file_extension = strtolower(pathinfo($_FILES['gallery_files']['name'][$i], PATHINFO_EXTENSION));
-                    $new_filename = 'gallery_' . uniqid() . '.' . $file_extension;
-                    
-                    if (move_uploaded_file($_FILES['gallery_files']['tmp_name'][$i], $upload_dir . $new_filename)) {
-                        $gallery_images[] = $new_filename;
+            // Files array structure is different for multiple uploads
+            if (is_array($_FILES['gallery_files']['name'])) {
+                $file_count = count($_FILES['gallery_files']['name']);
+                for ($i = 0; $i < $file_count; $i++) {
+                    if ($_FILES['gallery_files']['error'][$i] === UPLOAD_ERR_OK) {
+                        $file_extension = strtolower(pathinfo($_FILES['gallery_files']['name'][$i], PATHINFO_EXTENSION));
+                        $new_filename = 'gallery_' . uniqid() . '.' . $file_extension;
+                        
+                        if (move_uploaded_file($_FILES['gallery_files']['tmp_name'][$i], $upload_dir . $new_filename)) {
+                            $gallery_images[] = $new_filename;
+                        }
                     }
                 }
             }
@@ -76,20 +83,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($name) || empty($category_id) || empty($base_price)) {
             $error = 'Name, category, and base price are required.';
         } else if (empty($error)) {
-            if ($action === 'update' && $id) {
-                $stmt = $pdo->prepare("UPDATE services SET category_id = ?, name = ?, description = ?, base_price = ?, image = ?, max_expected_price = ?, is_disabled = ?, service_options = ?, gallery_images = ? WHERE id = ?");
-                if ($stmt->execute([$category_id, $name, $description, $base_price, $image, $max_expected_price, $is_disabled, $service_options_json, $gallery_json, $id])) {
-                    $success = 'Service updated successfully.';
+            try {
+                if ($action === 'update' && $id) {
+                    $stmt = $pdo->prepare("UPDATE services SET category_id = ?, name = ?, description = ?, base_price = ?, image = ?, max_expected_price = ?, is_disabled = ?, service_options = ?, gallery_images = ? WHERE id = ?");
+                    if ($stmt->execute([$category_id, $name, $description, $base_price, $image, $max_expected_price, $is_disabled, $service_options_json, $gallery_json, $id])) {
+                        $success = 'Service updated successfully.';
+                    } else {
+                        $error = 'Failed to update service.';
+                    }
                 } else {
-                    $error = 'Failed to update service.';
+                    $stmt = $pdo->prepare("INSERT INTO services (category_id, name, description, base_price, image, max_expected_price, is_disabled, service_options, gallery_images) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    if ($stmt->execute([$category_id, $name, $description, $base_price, $image, $max_expected_price, $is_disabled, $service_options_json, $gallery_json])) {
+                        $success = 'Service created successfully.';
+                    } else {
+                        $error = 'Failed to create service.';
+                    }
                 }
-            } else {
-                $stmt = $pdo->prepare("INSERT INTO services (category_id, name, description, base_price, image, max_expected_price, is_disabled, service_options, gallery_images) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                if ($stmt->execute([$category_id, $name, $description, $base_price, $image, $max_expected_price, $is_disabled, $service_options_json, $gallery_json])) {
-                    $success = 'Service created successfully.';
-                } else {
-                    $error = 'Failed to create service.';
-                }
+            } catch (PDOException $e) {
+                $error = 'Database Error: ' . $e->getMessage();
             }
         }
     } elseif ($action === 'delete') {
@@ -170,7 +181,7 @@ require_once __DIR__ . '/includes/header.php';
                             <img src="/frontend/public/<?= htmlspecialchars($service->image) ?>"
                                 alt="<?= htmlspecialchars($service->name) ?>"
                                 class="w-16 h-12 rounded bg-gray-100 object-cover border border-gray-200"
-                                onerror="this.src='/frontend/public/default-service.png'">
+                                onerror="this.onerror=null;this.src='/frontend/public/default-service.png'">
                         </td>
                         <td class="p-4">
                             <p class="font-bold text-gray-800">

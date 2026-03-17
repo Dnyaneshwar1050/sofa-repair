@@ -52,7 +52,7 @@ require_once __DIR__ . '/includes/header.php';
                             <img src="/frontend/public/<?= htmlspecialchars($service->image) ?>"
                                 alt="<?= htmlspecialchars($service->name) ?>"
                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                onerror="this.src='/frontend/public/default-service.png'">
+                                onerror="this.onerror=null;this.src='/frontend/public/default-service.png'">
                         </div>
                         
                         <!-- Card Content -->

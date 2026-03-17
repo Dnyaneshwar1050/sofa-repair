@@ -54,7 +54,7 @@ function getStatusClass($status)
                         <div class="p-5 flex-grow flex items-start gap-4">
                             <img src="/frontend/public/<?= htmlspecialchars($booking->service_image) ?>"
                                 class="w-20 h-20 rounded-lg object-cover bg-gray-100 shrink-0"
-                                onerror="this.src='/frontend/public/default-service.png'">
+                                onerror="this.onerror=null;this.src='/frontend/public/default-service.png'">
                             <div>
                                 <h3 class="font-bold text-lg mb-1 leading-tight">
                                     <?= htmlspecialchars($booking->service_name) ?>
